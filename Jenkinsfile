@@ -40,12 +40,24 @@ pipeline {
             }
         }
         */
+        stage('chnage the ownership of jar file') {
+            steps {
+                // Assuming the JAR is already built and exists in the Jenkins workspace
+                    // You can use the file path in the workspace like this:
+                    def jarFile = "${env.WORKSPACE}/target/demo-0.0.1-SNAPSHOT.jar"
+                    // Change ownership to 'ubuntu'
+                    sh "sudo chown ubuntu:ubuntu ${jarFile}"
+                    // Optionally, verify if ownership was changed
+                    sh "ls -l ${jarFile}"
+                }
+            }
+        }
         stage('Copy Jar to EC2') {
             steps {
-                sshagent (credentials: ['ec2-ssh-key']) {
-                    sh '''
-                    scp -o StrictHostKeyChecking=no /home/ubuntu/CI-CD-Pipeline-for-a-Java-App/target/demo-0.0.1-SNAPSHOT.jar  ubuntu@23.22.32.187:/home/ubuntu/demo-app
-                    '''
+                script {
+                    // Now copy the file to the remote server using SCP
+                    def jarFile = "${env.WORKSPACE}/target/demo-0.0.1-SNAPSHOT.jar"
+                    sh "scp -o StrictHostKeyChecking=no ${jarFile} ubuntu@23.22.32.187:/home/ubuntu/demo-app"
                 }
             }
         }
