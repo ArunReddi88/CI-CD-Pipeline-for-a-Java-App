@@ -25,4 +25,4 @@ COPY --from=builder /app/target/demo-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8081
 
 # Set default command
-ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8081", "--server.address=0.0.0.0"]
+ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8085", "--server.address=0.0.0.0"]
