@@ -1,22 +1,28 @@
-# Stage 1: Build the app using Maven
-FROM maven:3.9.4-eclipse-temurin-17 AS builder
+# Stage 1: Build the application using Maven
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
+
 WORKDIR /app
 
+# Copy pom.xml and download dependencies
 COPY pom.xml .
 RUN mvn dependency:go-offline
 
+# Copy the source code
 COPY src ./src
+
+# Build the application
 RUN mvn clean package -DskipTests
 
-# Stage 2: Create lightweight image for runtime
+# Stage 2: Create a minimal image to run the app
 FROM eclipse-temurin:17-jdk-alpine
+
 WORKDIR /app
 
-# Copy the built JAR from stage 1
-COPY --from=builder /app/target/*.jar app.jar
+# Copy the JAR from the builder stage
+COPY --from=builder /app/target/demo-0.0.1-SNAPSHOT.jar app.jar
 
-# Expose internal port
-EXPOSE 8080
+# Expose your desired port (we'll use 8081 as before)
+EXPOSE 8081
 
-# Run the application
-ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8080", "--server.address=0.0.0.0"]
+# Set default command
+ENTRYPOINT ["java", "-jar", "app.jar", "--server.port=8081", "--server.address=0.0.0.0"]
