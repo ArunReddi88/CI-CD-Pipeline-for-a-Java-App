@@ -54,6 +54,7 @@ pipeline {
         }
         stage('Copy Jar to EC2') {
             steps {
+                sshagent (credentials: ['ec2-ssh-key']){
                 script {
                     // Now copy the file to the remote server using SCP
                     def jarFile = "${env.WORKSPACE}/target/demo-0.0.1-SNAPSHOT.jar"
@@ -61,7 +62,7 @@ pipeline {
                 }
             }
         }
-
+        }
         stage('Deploy on EC2') {
             steps {
                 sshagent (credentials: ['ec2-ssh-key']) {
