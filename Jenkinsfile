@@ -28,7 +28,7 @@ pipeline {
                 }
             }
         }
-      
+      /*
         stage('Docker Build') {
             steps {
                 sh 'docker build -t demo-app-new .'
@@ -39,6 +39,7 @@ pipeline {
                 sh 'docker run -d -p 8085:8085 demo-app-new'
             }
         }
+        */
         stage('Copy Jar to EC2') {
             steps {
                 sshagent (credentials: ['ec2-ssh-key']) {
