@@ -42,6 +42,7 @@ pipeline {
         */
         stage('chnage the ownership of jar file') {
             steps {
+                script {
                 sshagent (credentials: ['ec2-ssh-key']){
                 // Assuming the JAR is already built and exists in the Jenkins workspace
                     // You can use the file path in the workspace like this:
@@ -53,19 +54,21 @@ pipeline {
                 }
             }
         }
+        }
         stage('Copy Jar to EC2') {
             steps {
-                sshagent (credentials: ['ec2-ssh-key']){
                 script {
+                    sshagent (credentials: ['ec2-ssh-key']){
                     // Now copy the file to the remote server using SCP
                     def jarFile = "${env.WORKSPACE}/target/demo-0.0.1-SNAPSHOT.jar"
                     sh "scp -o StrictHostKeyChecking=no ${jarFile} ubuntu@23.22.32.187:/home/ubuntu/demo-app"
                 }
             }
-        }
+          }
         }
         stage('Deploy on EC2') {
             steps {
+                script {
                 sshagent (credentials: ['ec2-ssh-key']) {
                     sh '''
                     ssh -o StrictHostKeyChecking=no ubuntu@23.22.32.187 '
@@ -75,6 +78,7 @@ pipeline {
                     '''
                 }
             }
+        }
         }
 
         
