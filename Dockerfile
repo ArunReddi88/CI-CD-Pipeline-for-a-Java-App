@@ -22,7 +22,7 @@ WORKDIR /app
 COPY --from=builder /app/target/demo-0.0.1-SNAPSHOT.jar app.jar
 
 # Expose your desired port (we'll use 8081 as before)
-EXPOSE 8081
+EXPOSE 8085
 
 # Set default command
 CMD ["java", "-jar", "app.jar", "--server.port=8085", "--server.address=0.0.0.0"]
