@@ -42,6 +42,7 @@ pipeline {
         */
         stage('chnage the ownership of jar file') {
             steps {
+                sshagent (credentials: ['ec2-ssh-key']){
                 // Assuming the JAR is already built and exists in the Jenkins workspace
                     // You can use the file path in the workspace like this:
                     def jarFile = "${env.WORKSPACE}/target/demo-0.0.1-SNAPSHOT.jar"
