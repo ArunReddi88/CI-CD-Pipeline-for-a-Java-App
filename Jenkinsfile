@@ -44,7 +44,7 @@ pipeline {
             steps {
                 sshagent (credentials: ['ec2-ssh-key']) {
                     sh '''
-                    scp -o StrictHostKeyChecking=no sudo scp -o StrictHostKeyChecking=no /home/ubuntu/CI-CD-Pipeline-for-a-Java-App/target/demo-0.0.1-SNAPSHOT.jar  ubuntu@23.22.32.187:/home/ubuntu/demo-app
+                    scp -o StrictHostKeyChecking=no /home/ubuntu/CI-CD-Pipeline-for-a-Java-App/target/demo-0.0.1-SNAPSHOT.jar  ubuntu@23.22.32.187:/home/ubuntu/demo-app
                     '''
                 }
             }
