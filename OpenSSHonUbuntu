@@ -1,0 +1,20 @@
+To install OpenSSH Server on Ubuntu, follow these steps:
+
+✅ Install OpenSSH Server
+# 1. Update package index
+sudo apt update
+# 2. Install OpenSSH Server
+sudo apt install -y openssh-server
+✅ Check SSH Service Status
+sudo systemctl status ssh
+If it's not active, you can start it with:
+sudo systemctl start ssh
+Enable it to run at boot:
+sudo systemctl enable ssh
+✅ Allow SSH through Firewall (optional)
+If you’re using ufw:
+sudo ufw allow ssh
+sudo ufw enable
+✅ Check SSH Port (default: 22)
+To verify SSH is listening:
+sudo ss -tuln | grep :22
