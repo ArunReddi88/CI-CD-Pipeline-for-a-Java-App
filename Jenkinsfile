@@ -73,7 +73,7 @@ pipeline {
                     sh '''
                     ssh -o StrictHostKeyChecking=no ubuntu@23.22.32.187 '
                       docker rm -f demo-app || true
-                      docker run -d -p 8085:8085 --name demo-app -v /home/ubuntu/demo-app/app.jar:/app/app.jar openjdk:17 java -jar /app/app.jar
+                      docker run -d -p 8085:8085 --name demo-app -v /home/ubuntu/demo-app/demo-0.0.1-SNAPSHOT.jar:/app/demo-0.0.1-SNAPSHOT.jar openjdk:17 java -jar /app/demo-0.0.1-SNAPSHOT.jar
                     '
                     '''
                 }
